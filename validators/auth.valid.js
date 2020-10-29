@@ -11,7 +11,6 @@ const userSignupValidator = [
     .isEmpty()
     .withMessage('Name is required'),
     check('email')
-    
     .isEmail()
     .withMessage('Email is required and Valid Email address'),
     check('password')
