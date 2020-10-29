@@ -2,7 +2,7 @@
 import User from '../models/user.js'
 import shortId from 'shortid'
 import jwt  from 'jsonwebtoken'
-import expressJwt from 'express-jwt'
+
 
 
 
