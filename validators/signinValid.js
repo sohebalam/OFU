@@ -3,13 +3,8 @@ import checkAPIs from 'express-validator';
 
 const { check} = checkAPIs;
 
-
-
-const userSignupValidator = [
-    check('name')
-    .not()
-    .isEmpty()
-    .withMessage('Name is required'),
+const userSigninValidator = [
+    
     check('email')
     .isEmail()
     .withMessage('Email is required and Valid Email address'),
@@ -19,7 +14,4 @@ const userSignupValidator = [
 
 ]
 
-
-
-
-export default userSignupValidator
+export default  userSigninValidator

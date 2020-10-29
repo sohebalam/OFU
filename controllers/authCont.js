@@ -1,6 +1,8 @@
 
 import User from '../models/user.js'
 import shortId from 'shortid'
+import jwt  from 'jsonwebtoken'
+import expressJwt from 'express-jwt'
 
 
 
@@ -21,16 +23,15 @@ const signup = (req,res)=> {
         let newUser = new User({name,email, password, profile, username})
         newUser.save((err,success)=> {
         if(err){
-            return res.stauts(400).json({error: err})
+            return res.status(400).json({error: err})
         }
         res.json([
-            {user: {name, email, password}}])
+            {message: 'Sign up Success, please sing in '}])
     })
- 
-    
-    
-    
+
+        
 }
+
 
 
 
