@@ -16,8 +16,6 @@ const SingleCourse = () => {
   const singleCourse = useSelector((state) => state.singleCourse)
   const { loading, error: courseError, course } = singleCourse
 
-  console.log("courseslug", course)
-
   const { data: session } = useSession()
 
   const dispatch = useDispatch()
@@ -33,8 +31,6 @@ const SingleCourse = () => {
   const router = useRouter()
 
   const { query } = router
-
-  console.log(query)
 
   useEffect(() => {
     // setVideos(items)

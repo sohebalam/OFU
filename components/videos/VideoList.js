@@ -43,7 +43,7 @@ function VideoList({ videos }) {
       <Box style={{ padding: "0.25rem", marginLeft: "1.5rem" }}>
         <Pagination
           className="pagination "
-          count={count}
+          count={isNaN(count) ? 0 : count}
           color="secondary"
           onChange={(e) => handleChange(e.target.textContent)}
           renderItem={(item) => (

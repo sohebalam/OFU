@@ -335,7 +335,6 @@ export const freeEnroll = (user, course) => async (dispatch) => {
 }
 
 export const paidEnroll = (user, course) => async (dispatch) => {
-  console.log("actionpaid", user, course)
   try {
     dispatch({ type: PAID_ENROLL_REQUEST })
 
@@ -381,8 +380,6 @@ export const paidEnroll = (user, course) => async (dispatch) => {
 }
 
 export const getStudentCourses = (user, slug) => async (dispatch) => {
-  console.log("actionsasds", user, slug, cookies.token)
-
   try {
     dispatch({ type: SINGLE_COURSE_REQUEST })
 
@@ -400,20 +397,24 @@ export const getStudentCourses = (user, slug) => async (dispatch) => {
         config
       )
 
-      console.log("daactio", data)
-
       dispatch({
         type: SINGLE_COURSE_SUCCESS,
         payload: data,
       })
     }
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookies.token}`,
+      },
+    }
 
-    // console.log("data", data)
+    const { data } = await axios.post(`/api/course/single/${slug}`, {}, config)
 
-    // dispatch({
-    //   type: SINGLE_COURSE_SUCCESS,
-    //   payload: data,
-    // })
+    dispatch({
+      type: SINGLE_COURSE_SUCCESS,
+      payload: data,
+    })
   } catch (error) {
     console.log(error)
     dispatch({

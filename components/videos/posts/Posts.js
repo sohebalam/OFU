@@ -7,7 +7,6 @@ import { Box } from "@mui/system"
 
 const Posts = ({ posts }) => {
   const dispatch = useDispatch()
-  console.log("posts", posts)
 
   return (
     <>

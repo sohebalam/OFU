@@ -161,7 +161,6 @@ export const singleCourseReducer = (
     case SINGLE_COURSE_REQUEST:
       return { loading: true }
     case SINGLE_COURSE_SUCCESS:
-      console.log("payload", action.payload)
       return { loading: false, course: action.payload }
     case SINGLE_COURSE_FAIL:
       return { loading: false, error: action.payload }
