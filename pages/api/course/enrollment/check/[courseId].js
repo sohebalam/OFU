@@ -8,8 +8,8 @@ import User from "../../../../../models/userModel"
 connectDB()
 
 export default Authenticated(async (req, res) => {
-  // console.log(req.method, req?.user)
-  const { slug } = req.query
+  const { courseId } = req.query
+  // console.log(courseId, "courseId")
   try {
     const user = await User.findById(req?.user._id).exec()
 
@@ -21,15 +21,17 @@ export default Authenticated(async (req, res) => {
       ids.push(user.courses[i].toString())
     }
 
-    const course = await Course.findOne({ slug: slug })
+    const course = await Course.findById({ _id: courseId })
 
-    const courseId = course._id
+    // const courseId = course?._id
 
-    return res.json({
+    // console.log(ids.includes(courseId))
+
+    return res.status(200).json({
       status: ids.includes(courseId),
       course: course,
     })
   } catch (error) {
-    console.log(error)
+    return console.log(error)
   }
 })

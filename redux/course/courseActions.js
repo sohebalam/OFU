@@ -242,7 +242,7 @@ export const getCourse = (req, slug) => async (dispatch) => {
 }
 
 export const checkEnrollment = (user, course) => async (dispatch) => {
-  // console.log("action", user, cookies.token)
+  console.log("action", user)
   try {
     dispatch({ type: CHECK_ENROLL_REQUEST })
 
@@ -253,9 +253,9 @@ export const checkEnrollment = (user, course) => async (dispatch) => {
           Authorization: `Bearer ${cookies.token}`,
         },
       }
-
+      console.log("actionzcdf", course._id)
       const { data } = await axios.post(
-        `/api/course/enrollment/check/${course.slug}`,
+        `/api/course/enrollment/check/${course?._id}`,
         {},
         config
       )
@@ -267,7 +267,7 @@ export const checkEnrollment = (user, course) => async (dispatch) => {
     }
 
     const { data } = await axios.get(
-      `/api/course/enrollment/check/${course._id}`
+      `/api/course/enrollment/check/${course?._id}`
     )
 
     dispatch({
@@ -286,7 +286,6 @@ export const checkEnrollment = (user, course) => async (dispatch) => {
 }
 
 export const freeEnroll = (user, course) => async (dispatch) => {
-  console.log("action", user, course)
   try {
     dispatch({ type: FREE_ENROLL_REQUEST })
 
@@ -329,11 +328,12 @@ export const freeEnroll = (user, course) => async (dispatch) => {
   }
 }
 
-export const paidEnroll = (course) => async (dispatch) => {
+export const paidEnroll = (user, course) => async (dispatch) => {
+  console.log("action", user, course)
   try {
     dispatch({ type: PAID_ENROLL_REQUEST })
     const { data } = await axios.post(
-      `/api/course/enrollment/paid/${course._id}`
+      `/api/course/enrollment/paid/${course?._id}`
     )
     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY)
     stripe.redirectToCheckout({ sessionId: data })

@@ -6,11 +6,14 @@ import fs from "fs"
 connectDB()
 
 export default async (req, res) => {
+  const { slug } = req.query
+
   try {
-    const all = await Course.find({ published: true })
+    const course = await Course.findOne({ slug: slug })
       .populate("instructor", "_id name")
       .exec()
-    res.json(all)
+
+    res.send(course)
   } catch (error) {
     console.log(error)
   }

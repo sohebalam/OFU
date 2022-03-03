@@ -68,6 +68,8 @@ const SingleCourseJumbotron = ({
     category,
   } = course
 
+  // console.log("jumbo", paid)
+
   const classes = useStyles()
   return (
     <Paper className={classes.root}>

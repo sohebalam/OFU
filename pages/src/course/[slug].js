@@ -36,6 +36,8 @@ const Course = () => {
   const courseGet = useSelector((state) => state.courseGet)
   const { loading, error: courseError, course } = courseGet
 
+  // console.log("course", course)
+
   const enrollmentCheck = useSelector((state) => state.enrollmentCheck)
   const { loading: enrollLoad, error: enrollError, enrolled } = enrollmentCheck
 

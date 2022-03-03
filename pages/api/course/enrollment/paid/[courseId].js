@@ -8,28 +8,54 @@ import User from "../../../../../models/userModel"
 connectDB()
 
 export default Authenticated(async (req, res) => {
-  // console.log(req.method, req?.user)
-  const { slug } = req.query
+  console.log(req.method)
+
+  return
+
   try {
-    const user = await User.findById(req?.user._id).exec()
+    // check if course is free or paid
+    const course = await Course.findById(req.query.courseId)
+      .populate("instructor")
+      .exec()
+    if (!course.paid) return
+    // application fee 30%
+    const fee = (course.price * 30) / 100
 
-    let ids = []
+    // console.log(course.instructor.stripe_account_id)
+    const { origin } = absoluteUrl(req)
+    // create stripe session
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      // purchase details
+      line_items: [
+        {
+          name: course.title,
+          amount: Math.round(course.price.toFixed(2) * 100),
+          currency: "gbp",
+          quantity: 1,
+        },
+      ],
+      // charge buyer and transfer remaining balance to seller (after fee)
 
-    let length = user.courses && user.courses.length
+      payment_intent_data: {
+        application_fee_amount: Math.round(fee.toFixed(2) * 100),
+        transfer_data: {
+          destination: course.instructor.stripe_account_id,
+        },
+      },
+      // redirect url after successful payment
 
-    for (let i = 0; i < length; i++) {
-      ids.push(user.courses[i].toString())
-    }
-
-    const course = await Course.findOne({ slug: slug })
-
-    const courseId = course._id
-
-    return res.json({
-      status: ids.includes(courseId),
-      course: course,
+      success_url: `${origin}/stripe/success/${course._id}`,
+      cancel_url: `${origin}/stripe/cancel`,
     })
-  } catch (error) {
-    console.log(error)
+    // console.log("SESSION ID => ", session)
+
+    await User.findByIdAndUpdate(req.user._id, {
+      stripeSession: session,
+    }).exec()
+    res.send(session.id)
+  } catch (err) {
+    console.log("PAID ENROLLMENT ERR", err)
+    return res.status(400).send("Enrollment create failed")
   }
 })
