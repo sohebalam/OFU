@@ -20,6 +20,9 @@ import {
   PUBLISHED_COURSES_FAIL,
   PUBLISHED_COURSES_REQUEST,
   PUBLISHED_COURSES_SUCCESS,
+  SINGLE_COURSE_FAIL,
+  SINGLE_COURSE_REQUEST,
+  SINGLE_COURSE_SUCCESS,
 } from "./courseTypes"
 
 export const createCourseReducer = (
@@ -144,6 +147,23 @@ export const freeEnrollReducer = (
     case PAID_ENROLL_SUCCESS:
       return { loading: false, free: action.payload }
     case PAID_ENROLL_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const singleCourseReducer = (
+  state = { loading: false, course: {} },
+  action
+) => {
+  switch (action.type) {
+    case SINGLE_COURSE_REQUEST:
+      return { loading: true }
+    case SINGLE_COURSE_SUCCESS:
+      console.log("payload", action.payload)
+      return { loading: false, course: action.payload }
+    case SINGLE_COURSE_FAIL:
       return { loading: false, error: action.payload }
     default:
       return state

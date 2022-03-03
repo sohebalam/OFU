@@ -43,7 +43,7 @@ const StripeSuccess = () => {
 
       const { data } = await axios.post(`/api/stripe/${id}`, {}, config)
 
-      router.push(`/user/course/${data?.course?.slug}`)
+      router.push(`/src/course/subscribed/${data?.course?.slug}`)
     }
 
     const { data } = await axios.post(`/api/stripe/${id}`)

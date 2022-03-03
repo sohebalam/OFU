@@ -24,6 +24,9 @@ import {
   PUBLISHED_COURSES_FAIL,
   PUBLISHED_COURSES_REQUEST,
   PUBLISHED_COURSES_SUCCESS,
+  SINGLE_COURSE_FAIL,
+  SINGLE_COURSE_REQUEST,
+  SINGLE_COURSE_SUCCESS,
 } from "./courseTypes"
 import absoluteUrl from "next-absolute-url"
 import { parseCookies } from "nookies"
@@ -369,6 +372,52 @@ export const paidEnroll = (user, course) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PAID_ENROLL_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const getStudentCourses = (user, slug) => async (dispatch) => {
+  console.log("actionsasds", user, slug, cookies.token)
+
+  try {
+    dispatch({ type: SINGLE_COURSE_REQUEST })
+
+    if (user._id && !/@gmail\.com$/.test(user._id)) {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      }
+
+      const { data } = await axios.post(
+        `/api/course/single/${slug}`,
+        {},
+        config
+      )
+
+      console.log("daactio", data)
+
+      dispatch({
+        type: SINGLE_COURSE_SUCCESS,
+        payload: data,
+      })
+    }
+
+    // console.log("data", data)
+
+    // dispatch({
+    //   type: SINGLE_COURSE_SUCCESS,
+    //   payload: data,
+    // })
+  } catch (error) {
+    console.log(error)
+    dispatch({
+      type: SINGLE_COURSE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

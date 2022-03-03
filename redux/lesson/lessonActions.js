@@ -2,6 +2,9 @@ import {
   POST_LESSONS_FAIL,
   POST_LESSONS_REQUEST,
   POST_LESSONS_SUCCESS,
+  SELECT_VIDEO_FAIL,
+  SELECT_VIDEO_REQUEST,
+  SELECT_VIDEO_SUCCESS,
 } from "./lessonTypes"
 import axios from "axios"
 import { parseCookies } from "nookies"
@@ -57,6 +60,27 @@ export const postLessons = (user, items, slug) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: POST_LESSONS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const selectLesson = (video) => async (dispatch) => {
+  try {
+    dispatch({ type: SELECT_VIDEO_REQUEST })
+
+    const data = video
+
+    dispatch({
+      type: SELECT_VIDEO_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: SELECT_VIDEO_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
