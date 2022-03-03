@@ -18,7 +18,7 @@ export default function Component() {
   const courses = published
 
   return (
-    <div>
+    <>
       <Paper style={{ marginTop: "0.5rem" }}>
         <Hero
           // imgSrc="/home-hero.jpg"
@@ -43,7 +43,7 @@ export default function Component() {
             </Grid>
           ))}
       </Grid>
-    </div>
+    </>
   )
 }
 

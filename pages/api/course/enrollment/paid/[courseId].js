@@ -4,14 +4,12 @@ import isInstructor from "../../../../../utils/middleware/isInstructor"
 import fs from "fs"
 import Authenticated from "../../../../../utils/middleware/isAuth"
 import User from "../../../../../models/userModel"
+import absoluteUrl from "next-absolute-url"
+const stripe = require("stripe")(process.env.STRIPE_SECRET)
 
 connectDB()
 
 export default Authenticated(async (req, res) => {
-  console.log(req.method)
-
-  return
-
   try {
     // check if course is free or paid
     const course = await Course.findById(req.query.courseId)

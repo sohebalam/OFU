@@ -18,6 +18,9 @@ import {
   LOAD_COURSE_FAIL,
   LOAD_COURSE_REQUEST,
   LOAD_COURSE_SUCCESS,
+  PAID_ENROLL_FAIL,
+  PAID_ENROLL_REQUEST,
+  PAID_ENROLL_SUCCESS,
   PUBLISHED_COURSES_FAIL,
   PUBLISHED_COURSES_REQUEST,
   PUBLISHED_COURSES_SUCCESS,
@@ -242,7 +245,7 @@ export const getCourse = (req, slug) => async (dispatch) => {
 }
 
 export const checkEnrollment = (user, course) => async (dispatch) => {
-  console.log("action", user)
+  // console.log("action", user)
   try {
     dispatch({ type: CHECK_ENROLL_REQUEST })
 
@@ -329,19 +332,40 @@ export const freeEnroll = (user, course) => async (dispatch) => {
 }
 
 export const paidEnroll = (user, course) => async (dispatch) => {
-  console.log("action", user, course)
+  console.log("actionpaid", user, course)
   try {
     dispatch({ type: PAID_ENROLL_REQUEST })
+
+    // console.log(cookies.token)
+
+    if (user._id && !/@gmail\.com$/.test(user._id)) {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      }
+
+      const { data } = await axios.post(
+        `/api/course/enrollment/paid/${course?._id}`,
+        {},
+        config
+      )
+
+      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY)
+      stripe.redirectToCheckout({ sessionId: data })
+
+      dispatch({
+        type: PAID_ENROLL_SUCCESS,
+        payload: data,
+      })
+    }
+
     const { data } = await axios.post(
       `/api/course/enrollment/paid/${course?._id}`
     )
     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY)
     stripe.redirectToCheckout({ sessionId: data })
-
-    dispatch({
-      type: PAID_ENROLL_SUCCESS,
-      payload: data,
-    })
   } catch (error) {
     dispatch({
       type: PAID_ENROLL_FAIL,

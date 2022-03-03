@@ -1,15 +1,34 @@
-import nc from "next-connect"
 import connectDB from "../../../connectDB"
-
-import { stripeSuccess } from "../../../controllers/instructorCont"
-import { isAuthenticated } from "../../../middlewares/auth"
-
-import onError from "../../../middlewares/errors"
-
-const router = nc({ onError })
-
+import Course from "../../../models/courseModel"
+import User from "../../../models/userModel"
+import Authenticated from "../../../utils/middleware/isAuth"
+const stripe = require("stripe")(process.env.STRIPE_SECRET)
 connectDB()
 
-router.use(isAuthenticated).get(stripeSuccess)
+export default Authenticated(async (req, res) => {
+  console.log(req.method, req.query.id, req.user._id)
 
-export default router
+  try {
+    const course = await Course.findById(req.query.id).exec()
+
+    // console.log(course._id)
+    const user = await User.findById(req?.user?._id.toString()).exec()
+
+    if (!user.stripeSession.id) return res.send(400)
+
+    const session = await stripe.checkout.sessions.retrieve(
+      user.stripeSession.id
+    )
+    console.log("Stripe success", session)
+    if (session.payment_status === "paid") {
+      await User.findByIdAndUpdate(user._id, {
+        $addToSet: { courses: course._id },
+        $set: { stripeSession: {} },
+      }).exec()
+      return res.json({ success: true, course })
+    }
+    // res.send(session.id)
+  } catch (error) {
+    return console.log("stipe error", error)
+  }
+})
