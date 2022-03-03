@@ -33,7 +33,7 @@ const VideoItem = ({ video }) => {
     // console.log(id, path, mimetype, slug)
 
     try {
-      const result = await axios.get(`/api/file/download/${slug}/${id}`, {
+      const result = await axios.get(`/api/course/lesson/${slug}/${id}`, {
         responseType: "blob",
       })
 
