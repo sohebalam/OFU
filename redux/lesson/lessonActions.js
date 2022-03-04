@@ -20,7 +20,7 @@ export const postLessons = (user, items, slug) => async (dispatch) => {
     if (user._id) {
       const config = {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
           Authorization: `Bearer ${cookies.token}`,
         },
       }

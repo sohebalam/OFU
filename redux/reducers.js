@@ -11,6 +11,10 @@ import {
   singleCourseReducer,
 } from "./course/courseReducers"
 import { filesCreateReducer } from "./file/fileReducer"
+import {
+  accountBalanceReducer,
+  studentCountReducer,
+} from "./instructor/instrReducer"
 import { selectVideoReducer } from "./lesson/lessonReducer"
 
 import { profileReducer, newInstructorReducer } from "./user/userReducer"
@@ -28,6 +32,9 @@ const reducers = combineReducers({
   freeEnroll: freeEnrollReducer,
   singleCourse: singleCourseReducer,
   coursesStudent: coursesStudentReducer,
+  //instructor
+  studentCount: studentCountReducer,
+  accountBalance: accountBalanceReducer,
 
   //file-lessons
   selectVideo: selectVideoReducer,

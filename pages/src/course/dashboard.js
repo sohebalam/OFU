@@ -58,9 +58,9 @@ const StudentId = () => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ req }) => {}
-)
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) =>
+//     async ({ req }) => {}
+// )
 
 export default StudentId
