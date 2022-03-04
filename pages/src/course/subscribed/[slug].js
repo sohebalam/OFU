@@ -63,7 +63,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     // console.log("cookies", cookies)
     // console.log("user", user)
-    console.log("session", session)
+    // console.log("session", session)
     // await store.dispatch(loadUser(user?.email, user))
 
     // await store.dispatch(getStudentCourses(user, params.slug))

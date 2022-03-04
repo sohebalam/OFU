@@ -23,6 +23,9 @@ import {
   SINGLE_COURSE_FAIL,
   SINGLE_COURSE_REQUEST,
   SINGLE_COURSE_SUCCESS,
+  STUDENT_COURSES_FAIL,
+  STUDENT_COURSES_REQUEST,
+  STUDENT_COURSES_SUCCESS,
 } from "./courseTypes"
 
 export const createCourseReducer = (
@@ -163,6 +166,22 @@ export const singleCourseReducer = (
     case SINGLE_COURSE_SUCCESS:
       return { loading: false, course: action.payload }
     case SINGLE_COURSE_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const coursesStudentReducer = (
+  state = { loading: false, courses: null },
+  action
+) => {
+  switch (action.type) {
+    case STUDENT_COURSES_REQUEST:
+      return { loading: true }
+    case STUDENT_COURSES_SUCCESS:
+      return { loading: false, courses: action.payload }
+    case STUDENT_COURSES_FAIL:
       return { loading: false, error: action.payload }
     default:
       return state

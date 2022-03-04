@@ -4,6 +4,7 @@ import {
   courseLoadReducer,
   coursePublishedReducer,
   coursesLoadReducer,
+  coursesStudentReducer,
   createCourseReducer,
   enrollmentCheckReducer,
   freeEnrollReducer,
@@ -26,6 +27,7 @@ const reducers = combineReducers({
   enrollmentCheck: enrollmentCheckReducer,
   freeEnroll: freeEnrollReducer,
   singleCourse: singleCourseReducer,
+  coursesStudent: coursesStudentReducer,
 
   //file-lessons
   selectVideo: selectVideoReducer,

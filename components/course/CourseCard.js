@@ -5,15 +5,7 @@ import { currencyFormatter } from "../../utils/currency"
 
 const CourseCard = ({ course, local }) => {
   return (
-    <Link
-      href={
-        // local === "myCourses"
-        //   ? `/src/user/course/${course?.slug}`
-        //   :
-
-        `/src/course/${course?.slug}`
-      }
-    >
+    <Link href={`/src/course/${course?.slug}`}>
       <Card style={{ padding: "1rem", cursor: "pointer" }}>
         <Image
           src={course?.images ? course?.images[0]?.url : "/course.jpg"}

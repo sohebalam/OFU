@@ -27,6 +27,9 @@ import {
   SINGLE_COURSE_FAIL,
   SINGLE_COURSE_REQUEST,
   SINGLE_COURSE_SUCCESS,
+  STUDENT_COURSES_FAIL,
+  STUDENT_COURSES_REQUEST,
+  STUDENT_COURSES_SUCCESS,
 } from "./courseTypes"
 import absoluteUrl from "next-absolute-url"
 import { parseCookies } from "nookies"
@@ -413,6 +416,50 @@ export const getStudentCourses = (user, slug) => async (dispatch) => {
 
     dispatch({
       type: SINGLE_COURSE_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    console.log(error)
+    dispatch({
+      type: SINGLE_COURSE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const studentCourses = (user) => async (dispatch) => {
+  try {
+    dispatch({ type: STUDENT_COURSES_REQUEST })
+
+    if (user._id && !/@gmail\.com$/.test(user._id)) {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
+      }
+
+      const { data } = await axios.post(`/api/course/dashboard`, {}, config)
+
+      dispatch({
+        type: STUDENT_COURSES_SUCCESS,
+        payload: data,
+      })
+    }
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookies.token}`,
+      },
+    }
+
+    const { data } = await axios.post(`/api/course/dashboard`, {}, config)
+
+    dispatch({
+      type: STUDENT_COURSES_SUCCESS,
       payload: data,
     })
   } catch (error) {
