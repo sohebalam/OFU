@@ -5,7 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline"
 import TextField from "@mui/material/TextField"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import Checkbox from "@mui/material/Checkbox"
-import Link from "@mui/material/Link"
+import Link from "next/link"
 import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox"
@@ -87,12 +87,10 @@ export default function SignIn() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="/src/user/login" variant="body2">
-                    Have an account ? Login
-                  </Link>
+                  <Link href="/src/user/login">Have an account ? Login</Link>
                 </Grid>
                 <Grid item>
-                  <Link href="/src/user/register" variant="body2">
+                  <Link href="/src/user/register">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

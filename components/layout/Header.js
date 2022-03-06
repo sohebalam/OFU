@@ -70,12 +70,14 @@ export default function ButtonAppBar() {
             // sx={{ flexGrow: 1 }}
           >
             <Link href="/">
-              <Image
-                alt="Remy Sharp"
-                src="/ofulogo.png"
-                width={50}
-                height={50}
-              />
+              <Box>
+                <Image
+                  alt="Remy Sharp"
+                  src="/ofulogo.png"
+                  width={50}
+                  height={50}
+                />
+              </Box>
             </Link>
           </IconButton>
           <Box sx={{ flexGrow: 1, mt: "1rem", ml: "1rem" }}>

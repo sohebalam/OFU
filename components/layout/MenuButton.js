@@ -4,7 +4,6 @@ import Menu from "@mui/material/Menu"
 import MenuItem from "@mui/material/MenuItem"
 import { signOut } from "next-auth/react"
 import PersonIcon from "@mui/icons-material/Person"
-// import Link from "next/link"
 import { useSession } from "next-auth/react"
 import { useSelector } from "react-redux"
 import Link from "next/link"
@@ -53,11 +52,7 @@ const MenuButton = ({ setUserState }) => {
         onClose={handleClose}
       >
         {dbUser && dbUser.role && dbUser.role.includes("instructor") ? (
-          <div>
-            {/* <Link href="/user/instructor/create">
-              <MenuItem onClick={handleClose}>Create Course</MenuItem>
-            </Link> */}
-          </div>
+          <div></div>
         ) : (
           dbUser &&
           dbUser.isAllowed === true && (
@@ -90,9 +85,7 @@ const MenuButton = ({ setUserState }) => {
           <MenuItem onClick={handleClose}>My Courses</MenuItem>
         </Link>
 
-        {/* <Link> */}
         <MenuItem onClick={handleSignout}>SignOut</MenuItem>
-        {/* </Link> */}
       </Menu>
     </div>
   )
