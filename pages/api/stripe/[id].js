@@ -21,13 +21,12 @@ export default Authenticated(async (req, res) => {
     )
     console.log("Stripe success", session)
     if (session.payment_status === "paid") {
-      await User.findByIdAndUpdate(user._id, {
+      await User.findByIdAndUpdate(user._id.toString(), {
         $addToSet: { courses: course._id },
         $set: { stripeSession: {} },
       }).exec()
-      return res.json({ success: true, course })
     }
-    // res.send(session.id)
+    return res.json({ success: true, course })
   } catch (error) {
     return console.log("stipe error", error)
   }

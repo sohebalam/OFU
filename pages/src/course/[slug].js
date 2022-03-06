@@ -45,11 +45,12 @@ const Course = () => {
       if (!user) {
         router.push("/user/login")
       }
-      // if (enrolled.status) {
-      //   return router.push(`/src/course/${enrolled.course.slug}`)
-      // }
+      if (enrolled.status) {
+        return router.push(`/src/course/subscribed/${course.slug}`)
+      }
 
       dispatch(paidEnroll(user, course))
+      return router.push(`/src/course/subscribed/${course.slug}`)
     } catch (error) {
       // toast("Enrollment failed please try again")
       //console.log(error)
@@ -64,14 +65,15 @@ const Course = () => {
       // if (!user) {
       //   router.push("/user/login")
       // }
-      // if (enrolled.status) {
-      //   return router.push(`/src/course/${enrolled.course.slug}`)
-      // }
+      console.log(enrolled.status, course.slug)
+      if (enrolled.status) {
+        return router.push(`/src/course/subscribed/${course.slug}`)
+      }
 
       dispatch(freeEnroll(user, course))
 
       // toast(data.message)
-      return router.push(`/src/course/${course.slug}`)
+      return router.push(`/src/course/subscribed/${course.slug}`)
     } catch (error) {
       // toast("Enrollment failed, try again4")
       //console.log(error)

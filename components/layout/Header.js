@@ -18,6 +18,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import InstructorMenu from "./InstructorMenu"
 import ExitToAppIcon from "@mui/icons-material/ExitToApp"
 import MenuButton from "./MenuButton"
+import { Avatar, Grid } from "@mui/material"
+import Image from "next/image"
 export default function ButtonAppBar() {
   const cookies = parseCookies()
   const router = useRouter()
@@ -61,19 +63,24 @@ export default function ButtonAppBar() {
         <Toolbar>
           <IconButton
             size="large"
-            edge="start"
+            // edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{ mr: 0 }}
             // sx={{ flexGrow: 1 }}
           >
-            <Link href="http://localhost:3000">
-              <LockOutlinedIcon />
+            <Link href="/">
+              <Image
+                alt="Remy Sharp"
+                src="/ofulogo.png"
+                width={50}
+                height={50}
+              />
             </Link>
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            AuthApp
-          </Typography>
+          <Box sx={{ flexGrow: 1, mt: "1rem", ml: "1rem" }}>
+            <Image alt="Remy Sharp" src="/logo2.png" width={150} height={50} />
+          </Box>
           {/* <Typography variant="h6" component="div">
             {userState && userState.name}
           </Typography> */}
@@ -91,10 +98,10 @@ export default function ButtonAppBar() {
           ) : (
             <>
               <Link href="/src/user/login">
-                <Button color="inherit">Login</Button>
+                <Button color="tertiary">Login</Button>
               </Link>
               <Link href="/src/user/register">
-                <Button color="inherit">Register</Button>
+                <Button color="tertiary">Register</Button>
               </Link>
             </>
           )}

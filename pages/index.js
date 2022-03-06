@@ -11,7 +11,7 @@ import { Grid } from "@mui/material"
 import { Box } from "@mui/material"
 
 export default function Component() {
-  const { data: session } = useSession()
+  // const { data: session } = useSession()
   const coursePublished = useSelector((state) => state.coursePublished)
   const { loading, error, published } = coursePublished
 
@@ -63,9 +63,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
         ? session?.user
         : req.cookies.user && JSON.parse(req.cookies.user)
 
-      await store.dispatch(publishedCourse(req))
+      await store.dispatch(loadUser(user?.email, user))
+      console.log(user)
 
-      store.dispatch(loadUser(user?.email, user))
+      await store.dispatch(publishedCourse(req))
 
       return {
         props: {

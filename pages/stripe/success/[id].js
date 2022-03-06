@@ -46,9 +46,11 @@ const StripeSuccess = () => {
       router.push(`/src/course/subscribed/${data?.course?.slug}`)
     }
 
+    console.log("here")
+
     const { data } = await axios.post(`/api/stripe/${id}`)
-    // //console.log("SUCCESS REQ DATA", data);
-    router.push(`/user/course/${data?.course?.slug}`)
+    console.log("SUCCESS REQ DATA", data)
+    router.push(`/src/course/subscribed/${data?.course?.slug}`)
   }
 
   return (
@@ -77,7 +79,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         ? JSON.parse(cookies.user)
         : session?.user
         ? session?.user
-        : ""
+        : cookies.user && JSON.parse(cookies.user)
 
       store.dispatch(loadUser(user?.email, user))
 

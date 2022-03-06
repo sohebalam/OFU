@@ -12,4 +12,15 @@ export default NextAuth({
       clientSecret: process.env.GOOGLE_SECRET,
     }),
   ],
+
+  // callbacks: {
+  //   async session({ user }) {
+  //     // Send properties to the client, like an access_token from a provider.
+  //     user.emailVerified = true
+
+  //     // console.log(user)
+
+  //     return user
+  //   },
+  // },
 })
