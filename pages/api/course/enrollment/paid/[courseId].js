@@ -50,6 +50,7 @@ export default Authenticated(async (req, res) => {
 
     await User.findByIdAndUpdate(req.user._id, {
       stripeSession: session,
+      $addToSet: { courses: course._id },
     }).exec()
     res.send(session.id)
   } catch (err) {

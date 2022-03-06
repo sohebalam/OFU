@@ -57,14 +57,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const session = await getSession({ req })
       const cookies = parseCookies()
 
-      // //console.log("cookies", cookies)
-
-      // //console.log(
-      //   "cokkies",
-      //   req?.cookies?.user && JSON.parse(req?.cookies?.user)
-      // )
-
-      const token = cookies?.token ? cookies?.token : req.cookies.token
+      // const token = cookies?.token ? cookies?.token : req.cookies.token
 
       const user = cookies?.user
         ? JSON.parse(cookies.user)
@@ -73,7 +66,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         : req?.cookies?.user && JSON.parse(req?.cookies?.user)
       // //console.log("user0", user)
       await store.dispatch(loadUser(user?.email, user))
-      await store.dispatch(loadCourses(user, token, req))
+      await store.dispatch(loadCourses(user))
 
       return {
         props: {

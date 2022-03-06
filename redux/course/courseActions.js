@@ -97,8 +97,8 @@ export const courseCreate = (image, values, user) => async (dispatch) => {
   }
 }
 
-export const loadCourses = (user, token, req) => async (dispatch) => {
-  // //console.log("load action", user, token)
+export const loadCourses = (user) => async (dispatch) => {
+  console.log("load action", user)
   try {
     const { origin } = absoluteUrl(req)
 
@@ -111,7 +111,7 @@ export const loadCourses = (user, token, req) => async (dispatch) => {
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${cookies.token}`,
         },
       }
 
@@ -126,22 +126,13 @@ export const loadCourses = (user, token, req) => async (dispatch) => {
         type: LOAD_COURSES_SUCCESS,
         payload: data,
       })
-    } else {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-
-      const { data } = await axios.get(
-        `${origin}/api/instructor/courses`,
-        config
-      )
-      dispatch({
-        type: LOAD_COURSES_SUCCESS,
-        payload: data,
-      })
     }
+
+    const { data } = await axios.get(`${origin}/api/instructor/courses`)
+    dispatch({
+      type: LOAD_COURSES_SUCCESS,
+      payload: data,
+    })
   } catch (error) {
     dispatch({
       type: LOAD_COURSES_FAIL,

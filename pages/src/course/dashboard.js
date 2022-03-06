@@ -32,9 +32,9 @@ const StudentId = () => {
 
   const router = useRouter()
 
-  const location = router.asPath.split("/")[3]
+  // const location = router.asPath.split("/")[3]
 
-  console.log(router.asPath)
+  console.log(coursesArray)
   return (
     <>
       <Typography variant="h4">Enrolled Courses</Typography>

@@ -58,14 +58,14 @@ const Course = () => {
   }
   const handelFreeEnroll = async (e) => {
     e.preventDefault()
-    console.log("paid", user)
-    console.log("free")
+    // console.log("paid", user)
+    // console.log("free")
 
     try {
       // if (!user) {
       //   router.push("/user/login")
       // }
-      console.log(enrolled.status, course.slug)
+      // console.log(enrolled.status, course.slug)
       if (enrolled.status) {
         return router.push(`/src/course/subscribed/${course.slug}`)
       }

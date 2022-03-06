@@ -86,7 +86,7 @@ const MenuButton = ({ setUserState }) => {
         <Link href="/src/user/profile">
           <MenuItem onClick={handleClose}>Profile</MenuItem>
         </Link>
-        <Link href={`/user/student/myCourses`}>
+        <Link href={`/src/course/dashboard`}>
           <MenuItem onClick={handleClose}>My Courses</MenuItem>
         </Link>
 

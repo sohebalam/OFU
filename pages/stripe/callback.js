@@ -10,9 +10,9 @@ import { parseCookies } from "nookies"
 import { wrapper } from "../../redux/store"
 
 const StripeCallback = () => {
-  const router = useRouter()
   const profile = useSelector((state) => state.profile)
   const { dbUser } = profile
+  const router = useRouter()
 
   const { data: session } = useSession()
 
@@ -21,21 +21,32 @@ const StripeCallback = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-    if (user) {
-      axios
-        .post("/api/stripe/status", { email: user?.email }, config)
-        .then((res) => {
-          router.push("/src/instructor/dashboard")
-          dispatch(loadUser())
-        })
-    }
-  }, [user])
+    dispatch(loadUser(user?.email, user))
+    stripeSuccess(user)
+  }, [])
 
+  const stripeSuccess = async (user) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+      if (user) {
+        const { data } = await axios.post(
+          `/api/stripe/status`,
+          { email: user?.email },
+          config
+        )
+
+        console.log(data)
+
+        router.push("/src/instructor/dashboard")
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return <CircularProgress />
 }
 
