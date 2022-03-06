@@ -74,6 +74,7 @@ export const sendBalanceRequest = (user) => async (dispatch) => {
       }
 
       const { data } = await axios.get("/api/instructor/balance", config)
+      console.log("data", data)
       dispatch({
         type: ACCOUNT_BAL_SUCCESS,
         payload: data,
@@ -81,6 +82,7 @@ export const sendBalanceRequest = (user) => async (dispatch) => {
     }
 
     const { data } = await axios.get("/api/instructor/balance")
+
     dispatch({
       type: ACCOUNT_BAL_SUCCESS,
       payload: data,

@@ -22,7 +22,7 @@ export default isInstructor(async (req, res) => {
 
     // console.log(loginLink)
 
-    res.send(loginLink.url)
+    return res.send(loginLink.url)
   } catch (err) {
     console.log("stripe payout settings login link err => , err")
   }

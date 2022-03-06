@@ -35,8 +35,8 @@ export default async (req, res) => {
       "stripe_user[email]": user.email,
     })
     // 5. then send the account link as response to fronend
-    res.send(`${accountLink.url}?${queryString.stringify(accountLink)}`)
+    return res.send(`${accountLink.url}?${queryString.stringify(accountLink)}`)
   } catch (err) {
-    //console.log("MAKE INSTRUCTOR ERR ", err)
+    return console.log("MAKE INSTRUCTOR ERR ", err)
   }
 }
