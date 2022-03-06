@@ -210,12 +210,12 @@ const Dashboard = () => {
                         {user && Array.isArray(user?.role) ? (
                           user?.role.map((role) => (
                             <>
-                              <p>Role: {user?.role}</p>
+                              <p>Role: {role}</p>
                             </>
                           ))
                         ) : (
                           <>
-                            <p>Role: {user?.role}</p>
+                            <p>Role: {role}</p>
                           </>
                         )}
 
