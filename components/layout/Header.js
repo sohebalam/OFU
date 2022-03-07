@@ -100,10 +100,10 @@ export default function ButtonAppBar() {
           ) : (
             <>
               <Link href="/src/user/login">
-                <Button color="tertiary">Login</Button>
+                <Button color="inherit">Login</Button>
               </Link>
               <Link href="/src/user/register">
-                <Button color="tertiary">Register</Button>
+                <Button color="inherit">Register</Button>
               </Link>
             </>
           )}

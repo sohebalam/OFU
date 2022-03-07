@@ -68,19 +68,10 @@ export const courseCreate = (image, values, user) => async (dispatch) => {
         payload: data,
       })
     } else {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-      const { data } = await axios.post(
-        "/api/instructor/course/create",
-        {
-          image,
-          ...values,
-        },
-        config
-      )
+      const { data } = await axios.post("/api/instructor/course/create", {
+        image,
+        ...values,
+      })
       dispatch({
         type: CREATE_COURSE_SUCCESS,
         payload: data,
@@ -100,7 +91,7 @@ export const courseCreate = (image, values, user) => async (dispatch) => {
 export const loadCourses = (user) => async (dispatch) => {
   console.log("load action", user)
   try {
-    const { origin } = absoluteUrl(req)
+    // const { origin } = absoluteUrl(req)
 
     // //console.log("orginin", origin)
     dispatch({ type: LOAD_COURSES_REQUEST })
@@ -116,11 +107,8 @@ export const loadCourses = (user) => async (dispatch) => {
       }
 
       // //console.log("config", config)
-      const { data } = await axios.get(
-        `${origin}/api/instructor/courses`,
-        config
-      )
-      // //console.log("data", data)
+      const { data } = await axios.post(`/api/instructor/courses`, {}, config)
+      console.log("data", data)
 
       dispatch({
         type: LOAD_COURSES_SUCCESS,
@@ -128,7 +116,8 @@ export const loadCourses = (user) => async (dispatch) => {
       })
     }
 
-    const { data } = await axios.get(`${origin}/api/instructor/courses`)
+    const { data } = await axios.post(`/api/instructor/courses`)
+    console.log("data", data)
     dispatch({
       type: LOAD_COURSES_SUCCESS,
       payload: data,

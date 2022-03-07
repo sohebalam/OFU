@@ -7,7 +7,7 @@ connectDB()
 export default isInstructor(async (req, res) => {
   console.log(req.method, req.user._id)
   try {
-    const courses = await Course.find({ instructor: req.user._id })
+    const courses = await Course.find({ instructor: req.user._id.toString() })
       .sort({ createdAt: -1 })
       .exec()
     return res.json(courses)

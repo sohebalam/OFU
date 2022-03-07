@@ -2,19 +2,37 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import { Avatar, Button, Grid, Tooltip, Typography } from "@mui/material"
 import Link from "next/link"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { wrapper } from "../../../redux/store"
 // import { loadCourses } from "../../../redux/actions/lessonActions"
 import Publish from "../../../components/course/Publish"
-import { getSession } from "next-auth/react"
+import { getSession, useSession } from "next-auth/react"
 import { loadUser } from "../../../redux/user/userAction"
 import { parseCookies } from "nookies"
 import { loadCourses } from "../../../redux/course/courseActions"
 const InstructorIndex = () => {
   const coursesLoad = useSelector((state) => state.coursesLoad)
   const { loading, error, courses } = coursesLoad
+
+  console.log(courses)
   const cookies = parseCookies()
-  // //console.log("dashboar", courses)
+
+  const dispatch = useDispatch()
+
+  const { data: session } = useSession()
+
+  // console.log(session)
+
+  const user = cookies?.user
+    ? JSON.parse(cookies.user)
+    : session?.user
+    ? session?.user
+    : ""
+
+  useEffect(() => {
+    dispatch(loadUser(user?.email, user))
+    dispatch(loadCourses(user))
+  }, [])
 
   return (
     <>
@@ -51,29 +69,19 @@ const InstructorIndex = () => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ req }) => {
-      const session = await getSession({ req })
-      const cookies = parseCookies()
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) =>
+//     async ({ req }) => {
+//       const session = await getSession({ req })
 
-      // const token = cookies?.token ? cookies?.token : req.cookies.token
+//       console.log(session)
 
-      const user = cookies?.user
-        ? JSON.parse(cookies.user)
-        : session?.user
-        ? session?.user
-        : req?.cookies?.user && JSON.parse(req?.cookies?.user)
-      // //console.log("user0", user)
-      await store.dispatch(loadUser(user?.email, user))
-      await store.dispatch(loadCourses(user))
-
-      return {
-        props: {
-          session,
-        },
-      }
-    }
-)
+//       return {
+//         props: {
+//           session,
+//         },
+//       }
+//     }
+// )
 
 export default InstructorIndex
