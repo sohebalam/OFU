@@ -21,7 +21,7 @@ import CourseForm from "../../../../components/forms/FileForm"
 import { useSelector, useDispatch } from "react-redux"
 import { wrapper } from "../../../../redux/store"
 import { loadCourse } from "../../../../redux/course/courseActions"
-// import Lessons from "../../../../components/file/DragList"
+import Lessons from "../../../../components/file/DragList"
 import Publish from "../../../../components/course/Publish"
 import { countStudents } from "../../../../redux/instructor/instrActions"
 import { getSession, useSession } from "next-auth/react"
@@ -89,6 +89,7 @@ const CourseView = () => {
 
   const createFile = () => {
     toast.success(fileCreated)
+    // dispatch(loadCourse(user))
   }
 
   return (
@@ -137,8 +138,7 @@ const CourseView = () => {
                     {/* {fileCreated && <Alert severity="success">{fileCreated}</Alert>} */}
                   </Grid>
 
-                  <Grid item xs={1}></Grid>
-                  <Grid item xs={2}>
+                  <Grid item xs={3}>
                     <div>
                       <Box marginLeft="6rem">
                         <Tooltip
@@ -198,7 +198,7 @@ const CourseView = () => {
             </Dialog>
           </Grid>
           <Grid container style={{ marginTop: "0.5rem" }}>
-            {/* <Lessons slug={slug} lessons={course.lessons} /> */}
+            <Lessons slug={slug} lessons={course.lessons} />
           </Grid>
         </>
       )}
@@ -220,7 +220,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       ? JSON.parse(cookies.user)
       : session?.user
       ? session?.user
-      : JSON.parse(req.cookies.user)
+      : req?.cookies?.user && JSON.parse(req.cookies.user)
 
     await store.dispatch(loadUser(user.email, user))
     await store.dispatch(loadCourse(user, token, req, params.slug))
