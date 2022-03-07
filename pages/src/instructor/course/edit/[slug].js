@@ -4,13 +4,13 @@ import Resizer from "react-image-file-resizer"
 import { useRouter } from "next/router"
 // import { List } from "@material-ui/icons"
 
-import {
-  courseEdit,
-  getlessons,
-  imageDelete,
-  imageUpload,
-  // loadCourse,
-} from "../../../../../redux/lesson/lessonActions"
+// import {
+//   courseEdit,
+//   getlessons,
+//   imageDelete,
+//   imageUpload,
+//   // loadCourse,
+// } from "../../../../../redux/lesson/lessonActions"
 import { useDispatch, useSelector } from "react-redux"
 import { wrapper } from "../../../../../redux/store"
 import { getSession } from "next-auth/react"
