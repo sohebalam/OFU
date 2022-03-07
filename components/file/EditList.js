@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { postLessons } from "../../redux/lesson/lessonActions"
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
 import { parseCookies } from "nookies"
+import { toast } from "react-toastify"
 
 const EditList = ({ slug, lessons }) => {
   const [data, setData] = useState([])
@@ -51,11 +52,11 @@ const EditList = ({ slug, lessons }) => {
   }
 
   const fileDelete = async (item) => {
-    if (dbUser._id && !/@gmail\.com$/.test(dbUser._id)) {
+    if (dbUser?._id && !/@gmail\.com$/.test(dbUser?._id)) {
       const config = {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${cookies.token}`,
+          Authorization: `Bearer ${cookies?.token}`,
         },
       }
       const { data } = await axios.put(
@@ -65,11 +66,13 @@ const EditList = ({ slug, lessons }) => {
         },
         config
       )
+      toast.success("File Deleted", data)
     }
 
     const { data } = await axios.put(`/api/instructor/course/lesson/${slug}`, {
       item,
     })
+    toast.success("File Deleted", data)
   }
 
   // //console.log(data)

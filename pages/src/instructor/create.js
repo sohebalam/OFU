@@ -10,6 +10,7 @@ import { courseCreate } from "../../../redux/course/courseActions"
 import { useDispatch, useSelector } from "react-redux"
 import { wrapper } from "../../../redux/store"
 import { getSession } from "next-auth/react"
+import { toast } from "react-toastify"
 // import { loadUser } from "../../../redux/actions/userActions"
 const CourseCreate = () => {
   // state
@@ -103,16 +104,8 @@ const CourseCreate = () => {
     // //console.log("files", image)
 
     try {
-      //console.log(values)
-
-      // //console.log("dbUser", dbUser._id)
-
-      // if (dbUser._id) {
-      //   //console.log("line", dbUser._id)
-      // }
-
       dispatch(courseCreate(image, values, dbUser))
-      console.log("Great! Now you can start adding lessons")
+      toast.success("Great! Now you can start adding lessons")
       router.push("/src/instructor/dashboard")
     } catch (error) {
       //console.log(error)

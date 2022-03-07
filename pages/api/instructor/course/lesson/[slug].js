@@ -57,5 +57,6 @@ export default isInstructor(async (req, res) => {
         new: true,
       }
     ).exec()
+    return res.json(updated)
   }
 })

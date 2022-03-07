@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material"
+import { CircularProgress, Grid, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import { useDispatch, useSelector } from "react-redux"
 import CourseCard from "../../../components/course/CourseCard"
@@ -37,23 +37,29 @@ const StudentId = () => {
   console.log(coursesArray)
   return (
     <>
-      <Typography variant="h4">Enrolled Courses</Typography>
-      <Grid container>
-        {coursesArray &&
-          coursesArray?.map((course) => (
-            <Grid item key={course?._id} xs={4}>
-              <Box
-                style={{
-                  padding: "0.5rem",
-                  paddingLeft: "0",
-                  paddingRight: "0",
-                }}
-              >
-                {coursesArray && <CourseCard course={course} />}
-              </Box>
-            </Grid>
-          ))}
-      </Grid>
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <>
+          <Typography variant="h4">Enrolled Courses</Typography>
+          <Grid container>
+            {coursesArray &&
+              coursesArray?.map((course) => (
+                <Grid item key={course?._id} xs={4}>
+                  <Box
+                    style={{
+                      padding: "0.5rem",
+                      paddingLeft: "0",
+                      paddingRight: "0",
+                    }}
+                  >
+                    {coursesArray && <CourseCard course={course} />}
+                  </Box>
+                </Grid>
+              ))}
+          </Grid>
+        </>
+      )}
     </>
   )
 }

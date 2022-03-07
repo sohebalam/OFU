@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { Avatar, Button, Grid, Tooltip, Typography } from "@mui/material"
+import {
+  Avatar,
+  Button,
+  CircularProgress,
+  Grid,
+  Tooltip,
+  Typography,
+} from "@mui/material"
 import Link from "next/link"
 import { useDispatch, useSelector } from "react-redux"
 import { wrapper } from "../../../redux/store"
@@ -36,35 +43,41 @@ const InstructorIndex = () => {
 
   return (
     <>
-      <h1 className="jumbotron text-center square">Instructor Dashboard</h1>
-      {courses &&
-        courses.map((course) => (
-          <Grid container key={course._id}>
-            <Grid item xs={3}>
-              <Avatar
-                style={{ height: "100px", width: "100px" }}
-                src={course?.images ? course.images[0]?.url : "/course.jpg"}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <Link href={`/src/instructor/course/${course.slug}`}>
-                <a>
-                  <Button style={{ underline: true }}>
-                    <Typography variant="h5">{course?.title}</Typography>
-                  </Button>
-                </a>
-              </Link>
-              <p>{course.lessons?.length}</p>
-            </Grid>
-            <Grid item xs={3}>
-              <Publish
-                initCourse={course}
-                slug={course.slug}
-                lessons={course.lessons}
-              />
-            </Grid>
-          </Grid>
-        ))}
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <>
+          <h1 className="jumbotron text-center square">Instructor Dashboard</h1>
+          {courses &&
+            courses.map((course) => (
+              <Grid container key={course._id}>
+                <Grid item xs={3}>
+                  <Avatar
+                    style={{ height: "100px", width: "100px" }}
+                    src={course?.images ? course.images[0]?.url : "/course.jpg"}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <Link href={`/src/instructor/course/${course.slug}`}>
+                    <a>
+                      <Button style={{ underline: true }}>
+                        <Typography variant="h5">{course?.title}</Typography>
+                      </Button>
+                    </a>
+                  </Link>
+                  <p>{course.lessons?.length}</p>
+                </Grid>
+                <Grid item xs={3}>
+                  <Publish
+                    initCourse={course}
+                    slug={course.slug}
+                    lessons={course.lessons}
+                  />
+                </Grid>
+              </Grid>
+            ))}
+        </>
+      )}
     </>
   )
 }
