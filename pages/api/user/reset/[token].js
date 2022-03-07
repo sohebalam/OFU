@@ -23,7 +23,7 @@ export default async (req, res) => {
       }
 
       if (token) {
-        const decoded = await jwt.verify(token, process.env.JWT_SECRET)
+        const decoded = await jwt.verify(token, process.env.SECRET)
         req.user = decoded
       }
 
