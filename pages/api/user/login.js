@@ -22,7 +22,7 @@ export default async (req, res) => {
       // //console.log(user)
       const doMatch = await bcrypt.compare(password, user.password)
       if (doMatch) {
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+        const token = jwt.sign({ userId: user._id }, process.env.SECRET, {
           expiresIn: "7d",
         })
         if (!doMatch) {
