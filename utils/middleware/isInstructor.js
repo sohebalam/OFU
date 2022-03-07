@@ -33,7 +33,7 @@ const isInstructor = (component) => {
       // //console.log("here")
       // //console.log(req.headers.authorization)
       var token = req.headers.authorization.split(" ")[1]
-      const decoded = jwt.verify(token, process.env.JWT_SECRET)
+      const decoded = jwt.verify(token, process.env.SECRET)
       const ObjectId = decoded.userId
       // //console.log("here")
       const user = await User.findById({ _id: ObjectId.toString() }).exec()
