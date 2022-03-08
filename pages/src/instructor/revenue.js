@@ -120,7 +120,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         ? JSON.parse(cookies.user)
         : session?.user
         ? session?.user
-        : req.cookies.user && JSON.parse(req.cookies.user)
+        : ""
 
       store.dispatch(loadUser(user?.email, user))
 
